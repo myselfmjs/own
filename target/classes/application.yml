@@ -1,0 +1,19 @@
+# 默认前缀
+server:
+  contextPath=/
+
+# 整合JSP
+spring:
+  mvc:
+    view:
+    # 页面默认前缀目录
+      prefix: /WEB-INF/view/
+    # 响应页面默认后缀
+      suffix: .jsp
+  thymeleaf:
+    #prefix: /WEB-INF/html/
+    #mode: HTML
+    prefix: classpath:/templates/
+    encoding: utf-8
+      # 禁用缓存
+    cache: false
