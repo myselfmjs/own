@@ -21,6 +21,7 @@ public class HelloController {
 
     @RequestMapping("/index")
     public String index(){
+        int t= 7/0;
         return "/WEB-INF/view/index.jsp";
     }
 

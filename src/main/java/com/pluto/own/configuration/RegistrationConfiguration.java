@@ -14,7 +14,7 @@ import org.springframework.web.servlet.DispatcherServlet;
  * @author ：pluto
  * @date ：Created in 2019/7/26 13:35
  */
-@Configuration
+//@Configuration
 public class RegistrationConfiguration {
 
     /**

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSessionListener;
  * @author ：pluto
  * @date ：Created in 2019/7/26 14:05
  */
-@WebListener
+//@WebListener
 public class MyHttpSessionListener implements HttpSessionListener{
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {

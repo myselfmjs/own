@@ -22,4 +22,4 @@ spring:
     encoding: utf-8
     # 禁用缓存
     cache: false
-    view-names: html/*,vue/*,jsps/*,templates/*
+    view-names: html/*,vue/*,jsps/*,templates/*,error/*

@@ -101,12 +101,12 @@ public class ViewResolverConfiguration implements WebMvcConfigurer {
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+
     /**
      * @Description: 配置静态文件映射
      */
-    /*@Override
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/static/");
-    }*/
-
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/templates/");
+    }
 }
