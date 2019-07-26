@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;  //springboot 2.0
 // import org.springframework.boot.context.web.SpringBootServletInitializer; //springboot 1.0
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 //@ComponentScan(basePackages="")
 //@EnableScheduling
 @SpringBootApplication
+//@ServletComponentScan //自动注入Servlet、Filter、Listener
 public class OwnApplication extends SpringBootServletInitializer {
 
     @Override
