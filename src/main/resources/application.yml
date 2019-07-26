@@ -2,18 +2,24 @@
 server:
   contextPath=/
 
-# 整合JSP
+
 spring:
+  # 整合JSP
   mvc:
     view:
     # 页面默认前缀目录
       prefix: /WEB-INF/view/
     # 响应页面默认后缀
       suffix: .jsp
+      view-names: '*'
+    # 访问静态资源要加上 static
+    static-path-pattern: /**
+  # 整合thymeleaf
   thymeleaf:
-    #prefix: /WEB-INF/html/
-    #mode: HTML
+    mode: HTML5
     prefix: classpath:/templates/
+    suffix: .html
     encoding: utf-8
-      # 禁用缓存
+    # 禁用缓存
     cache: false
+    view-names: html/*,vue/*,jsps/*,templates/*
