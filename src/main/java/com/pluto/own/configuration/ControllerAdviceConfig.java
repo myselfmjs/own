@@ -1,5 +1,7 @@
 package com.pluto.own.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,18 +24,21 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerAdviceConfig {
 
+    private static final Logger logger = LoggerFactory.getLogger(ControllerAdviceConfig.class);
     /**
      * 全局异常处理
      * @ExceptionHandler 注解用来指明异常的处理类型，
-     * 即如果这里指定为 NullpointerException，则数组越界异常就不会进到这个方法中来
+     * 即如果这里指定为 NullpointerException，则数组越界异常就不会进到这个方法中来;
+     * 配置异常会使 logback.xml 配置失效；不会自动导出错误日志
      * @author: Pluto
      * @Date: 2019/7/29 10:05
     */
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     public String customException(Exception e){
         System.out.println(e.getMessage());
+        logger.error("抛异常了！"+e.getLocalizedMessage());
         return null;
-    }
+    }*/
 
     /**
      * 全局数据绑定

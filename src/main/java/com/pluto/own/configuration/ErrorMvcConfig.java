@@ -21,7 +21,6 @@ public class ErrorMvcConfig implements ErrorPageRegistrar {
     public void registerErrorPages(ErrorPageRegistry registry) {
         ErrorPage error404 = new ErrorPage(HttpStatus.NOT_FOUND,"/error/404.html");
         ErrorPage error500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/error/500.html");
-            System.out.println(error404.getPath());
         registry.addErrorPages(error404,error500);
     }
 
