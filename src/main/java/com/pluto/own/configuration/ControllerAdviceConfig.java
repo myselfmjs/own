@@ -1,17 +1,13 @@
 package com.pluto.own.configuration;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
-
+import com.google.common.collect.Maps;
 /**
  * @ ControllerAdviceConfig 这是一个增强的 Controller
  * 可以实现三个方面的功能
@@ -30,15 +26,24 @@ public class ControllerAdviceConfig {
      * @ExceptionHandler 注解用来指明异常的处理类型，
      * 即如果这里指定为 NullpointerException，则数组越界异常就不会进到这个方法中来;
      * 配置异常会使 logback.xml 配置失效；不会自动导出错误日志
+     * 可配置common-lag包下的ExceptionUtils 手动抛出异常信息
+     *ExceptionUtils.getFullStackTrace(e)
      * @author: Pluto
      * @Date: 2019/7/29 10:05
     */
-    /*@ExceptionHandler(Exception.class)
-    public String customException(Exception e){
-        System.out.println(e.getMessage());
-        logger.error("抛异常了！"+e.getLocalizedMessage());
-        return null;
-    }*/
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Object customException(Exception e){
+        logger.error(ExceptionUtils.getFullStackTrace(e));
+        String msg = e.getMessage();
+        if (msg == null || msg.equals("")) {
+            msg = "服务器出错";
+        }
+        Map<String,String> map =  Maps.newHashMap();
+        map.put("message", msg);
+        return map;
+
+    }
 
     /**
      * 全局数据绑定

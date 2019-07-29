@@ -49,6 +49,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+
         <!--thymeleaf整合JSP需要用到的依赖-->
         <dependency>
             <groupId>org.thymeleaf</groupId>
@@ -59,6 +60,20 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring4</artifactId>
             <version>3.0.11.RELEASE</version>
+        </dependency>
+
+        <!--使用 ExceptionUtils 手动输出错误日志-->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
+        <!--com.google.guava 工具类-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
         </dependency>
 
     </dependencies>
