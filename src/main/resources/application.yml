@@ -23,3 +23,9 @@ spring:
     # 禁用缓存
     cache: false
     view-names: html/*,vue/*,jsps/*,templates/*,error/*
+  # 设置字符集
+#  http:
+  #  encoding:
+    #  charset: UTF-8
+    #  force: false
+    #  enabled: true

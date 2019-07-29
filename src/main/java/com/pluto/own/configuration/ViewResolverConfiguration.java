@@ -3,6 +3,8 @@ package com.pluto.own.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -15,6 +17,9 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 
 /**
@@ -109,4 +114,24 @@ public class ViewResolverConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/templates/");
     }
+
+
+
+    /***************************解决请求返回字符串中文乱码-BEGIN*******************************/
+    @Bean
+    public HttpMessageConverter<String> responseBodyStringConverter() {
+        StringHttpMessageConverter converter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        return converter;
+    }
+
+    /**
+     * 修改StringHttpMessageConverter默认配置
+     * @param converters
+     */
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters){
+        converters.add(responseBodyStringConverter());
+    }
+    /***************************解决请求返回字符串中文乱码-END*******************************/
+
 }
