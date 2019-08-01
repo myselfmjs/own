@@ -1,5 +1,7 @@
 import com.pluto.own.registration.MyRealm01;
 import com.pluto.own.registration.MyRealm02;
+import com.pluto.own.registration.MyRealmPermission01;
+import com.pluto.own.registration.MyRealmPermission02;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.Authenticator;
@@ -7,10 +9,12 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.pam.AllSuccessfulStrategy;
 import org.apache.shiro.authc.pam.FirstSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
+import org.apache.shiro.authz.ModularRealmAuthorizer;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.junit.Assert;
 import org.junit.Test;
@@ -146,8 +150,54 @@ public class TestShiro {
             e.printStackTrace();
         }
         Assert.assertEquals(true, subject.isAuthenticated()); //断言用户已经登录
-
         //退出
         subject.logout();
+    }
+
+    /**
+     * Shiro 授权测试
+     */
+    @Test
+    public void testPermissionRealm(){
+
+        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
+        //多个Realm
+        Collection<Realm> realms = new ArrayList<>();
+        realms.add(new MyRealmPermission01());
+        realms.add(new MyRealmPermission02());
+
+        // 设置 多个授权，匹配其中一个则为True
+        ModularRealmAuthorizer modularRealmAuthorizer = new ModularRealmAuthorizer();
+        modularRealmAuthorizer.setRealms(realms);
+        defaultSecurityManager.setAuthorizer(modularRealmAuthorizer);
+
+        // 设置 多个Realm 认证  可自定认证规则
+        ModularRealmAuthenticator modularRealmAuthenticator = new ModularRealmAuthenticator();
+        modularRealmAuthenticator.setRealms(realms);
+        modularRealmAuthenticator.setAuthenticationStrategy(new FirstSuccessfulStrategy());
+        defaultSecurityManager.setAuthenticator(modularRealmAuthenticator);
+
+        // 设置 SecurityManager
+        SecurityUtils.setSecurityManager(defaultSecurityManager);
+
+        //得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken("zhang", "123");
+
+        try {
+            //登录，即身份验证
+            subject.login(token);
+        } catch (AuthenticationException e) {
+            //身份验证失败
+            e.printStackTrace();
+        }
+        Assert.assertEquals(true, subject.isPermitted("user:add:select")); //断言用户是否有权限
+
+        // 获取 当前主体的角色、权限(通过setSession 参数的方式)
+        System.out.println(SecurityUtils.getSubject().getSession().getAttribute("role"));
+        System.out.println(SecurityUtils.getSubject().getSession().getAttribute("permission"));
+        //退出
+        subject.logout();
+
     }
 }
