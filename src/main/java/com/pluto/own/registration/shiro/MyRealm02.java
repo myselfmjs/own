@@ -1,4 +1,4 @@
-package com.pluto.own.registration;
+package com.pluto.own.registration.shiro;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.realm.Realm;
@@ -8,10 +8,10 @@ import org.apache.shiro.realm.Realm;
  * @author ：pluto
  * @date ：Created in 2019/7/30 11:26
  */
-public class MyRealm01 implements Realm {
+public class MyRealm02 implements Realm {
     @Override
     public String getName() {
-        return "myRealm01";
+        return "myRealm02";
     }
 
     @Override
@@ -26,14 +26,14 @@ public class MyRealm01 implements Realm {
         String username = (String)token.getPrincipal();  //得到用户名
         String password = new String((char[])token.getCredentials()); //得到密码
         if(!"zhang".equals(username)) {
-            System.out.println("错误的账号");
+            System.out.println("错误的账号zhang01："+ username);
             throw new UnknownAccountException(); //如果用户名错误
         }
         if(!"123".equals(password)) {
-            System.out.println("错误的密码");
+            System.out.println("错误的密码12301：" + password);
             throw new IncorrectCredentialsException(); //如果密码错误
         }
-        System.out.println("身份验证成功");
+        System.out.println("身份验证成功Realm02");
         //如果身份认证验证成功，返回一个AuthenticationInfo实现；
         return new SimpleAuthenticationInfo(username, password, getName());
     }

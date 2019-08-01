@@ -1,8 +1,7 @@
 package com.pluto.own.configuration;
 
-import com.pluto.own.registration.MyInterceptor01;
-import com.pluto.own.registration.MyInterceptor02;
-import org.springframework.context.annotation.Configuration;
+import com.pluto.own.registration.springboot.MyInterceptor01;
+import com.pluto.own.registration.springboot.MyInterceptor02;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

@@ -1,14 +1,5 @@
 package com.pluto.own.configuration;
 
-import com.pluto.own.registration.MyFilter;
-import com.pluto.own.registration.MyServletListener;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.DispatcherServlet;
-
 /**
  * 注册 Servlet、Filter、Interceptor
  * @author ：pluto

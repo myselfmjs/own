@@ -1,4 +1,4 @@
-package com.pluto.own.registration;
+package com.pluto.own.registration.shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;

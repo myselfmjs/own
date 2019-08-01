@@ -1,4 +1,4 @@
-package com.pluto.own.registration;
+package com.pluto.own.registration.shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -28,7 +28,7 @@ public class MyRealmPermission01 extends AuthorizingRealm {
         info.addStringPermission("user:add:select");
         // 将权限信息set 到Session参数中，方便在其它地方调用获取当前主体的权限信息
         SecurityUtils.getSubject().getSession().setAttribute("role","admin");
-        SecurityUtils.getSubject().getSession().setAttribute("permission","*:*:*");
+        SecurityUtils.getSubject().getSession().setAttribute("permission","user:add:select");
         return info;
     }
 

@@ -1,12 +1,10 @@
-import com.pluto.own.registration.MyRealm01;
-import com.pluto.own.registration.MyRealm02;
-import com.pluto.own.registration.MyRealmPermission01;
-import com.pluto.own.registration.MyRealmPermission02;
+import com.pluto.own.registration.shiro.MyRealm01;
+import com.pluto.own.registration.shiro.MyRealm02;
+import com.pluto.own.registration.shiro.MyRealmPermission01;
+import com.pluto.own.registration.shiro.MyRealmPermission02;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.pam.AllSuccessfulStrategy;
 import org.apache.shiro.authc.pam.FirstSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.authz.ModularRealmAuthorizer;
@@ -14,7 +12,6 @@ import org.apache.shiro.config.Ini;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.junit.Assert;
 import org.junit.Test;
@@ -156,6 +153,11 @@ public class TestShiro {
 
     /**
      * Shiro 授权测试
+     * 授权流程：
+     * 1.1、如果调用hasRole*，则直接获取AuthorizationInfo.getRoles()与传入的角色比较即可；
+     * 1.2、首先如果调用如isPermitted(“user:view”)，首先通过PermissionResolver将权限字符串转换成相应的Permission实例，默认使用WildcardPermissionResolver，即转换为通配符的WildcardPermission；
+     * 2、通过AuthorizationInfo.getObjectPermissions()得到Permission实例集合；通过AuthorizationInfo. getStringPermissions()得到字符串集合并通过PermissionResolver解析为Permission实例；然后获取用户的角色，并通过RolePermissionResolver解析角色对应的权限集合（默认没有实现，可以自己提供）；
+     * 3、接着调用Permission. implies(Permission p)逐个与传入的权限比较，如果有匹配的则返回true，否则false。
      */
     @Test
     public void testPermissionRealm(){
@@ -170,6 +172,10 @@ public class TestShiro {
         ModularRealmAuthorizer modularRealmAuthorizer = new ModularRealmAuthorizer();
         modularRealmAuthorizer.setRealms(realms);
         defaultSecurityManager.setAuthorizer(modularRealmAuthorizer);
+        // 设置自己的MyRolePermissionResolver
+        // modularRealmAuthorizer.setRolePermissionResolver(new MyRolePermissionResolver());
+        // 设置自己的MyPermissionResolver
+        // modularRealmAuthorizer.setPermissionResolver(new MyPermissionResolver());
 
         // 设置 多个Realm 认证  可自定认证规则
         ModularRealmAuthenticator modularRealmAuthenticator = new ModularRealmAuthenticator();
@@ -192,7 +198,8 @@ public class TestShiro {
             e.printStackTrace();
         }
         Assert.assertEquals(true, subject.isPermitted("user:add:select")); //断言用户是否有权限
-
+        Assert.assertEquals(true, subject.isPermitted("user:add:update")); //断言用户是否有权限
+       // Assert.assertEquals(true, subject.isPermitted("menu:add:update")); //断言用户是否有权限
         // 获取 当前主体的角色、权限(通过setSession 参数的方式)
         System.out.println(SecurityUtils.getSubject().getSession().getAttribute("role"));
         System.out.println(SecurityUtils.getSubject().getSession().getAttribute("permission"));

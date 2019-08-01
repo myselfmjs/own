@@ -1,4 +1,4 @@
-package com.pluto.own.registration;
+package com.pluto.own.registration.springboot;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
