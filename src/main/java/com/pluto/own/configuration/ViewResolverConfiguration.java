@@ -112,7 +112,7 @@ public class ViewResolverConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/templates/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
     }
 
 

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS</title>
+    <style type="text/css">
+        span{display: block;  margin-top: 20px; font-weight:bold}
+        p{display: inline}
+        table, th , td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div ng-app="myApp">
+    <span>我的第一个表达式: {{ 5 + 5 }}</span>
+
+    <span>过滤器：uppercase 大写</span>
+    <div  ng-controller="personCtrl">
+        名字: <input ng-model="lastName">
+        <p>姓名为 {{ lastName | uppercase }}</p>
+    </div>
+
+    <span>过滤器：currency 货币格式化输出</span>
+    <div ng-controller="currency">
+        <input type="number" ng-model="quantity">
+        <input type="number" ng-model="price">
+        <p>总价 = {{ (quantity * price) | currency }}</p>
+    </div>
+
+    <span>指令：ng-repeat 来循环数组 </span>
+    <div  ng-init="names=['Jani','Hege','Kai']">
+        <ul>
+            <li ng-repeat="x in names">
+                {{ x }}
+            </li>
+        </ul>
+    </div>
+
+    <span>过滤器：order 根据表达式排列组合</span>
+    <div ng-controller="namesCtr">
+        <ul>
+            <li ng-repeat="x in names | orderBy:'country'">
+                {{ x.name + ', ' + x.country }}
+            </li>
+        </ul>
+    </div>
+
+    <span>过滤输入：filter</span>
+    <div ng-controller="namesCtr1">
+        <p><input type="text" ng-model="test"></p>
+        <ul>
+            <li ng-repeat="x in names | filter:test | orderBy:'country'">
+                {{ (x.name | uppercase) + ', ' + x.country }}
+            </li>
+        </ul>
+    </div>
+
+    <span>过滤器：data 日期</span>
+    <div ng-controller="dateCtr">
+       <!-- <p>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss'}}</p>-->
+        <input type="text" ng-model="dateStr">
+    </div>
+
+    <span>自定义过滤器：reverse 将字符串反转</span>
+    <div ng-controller="reverseStr">
+        <input type="text" ng-model="str01">
+        <p>反转 = {{ str01 | reverse }}</p>
+    </div>
+
+    -------------------------------------------------------------------------------------------------------------------------
+
+    <span>服务：Service</span>
+    <div ng-controller="customersCtrl">
+        <!--<input type="text" ng-model="myUrl">-->
+        <p>{{myUrl}}</p>
+    </div>
+
+    <span>服务：$timeout</span>
+    <div ng-controller="timeoutService">
+        <p>{{myHeader}}</p>
+    </div>
+
+    <span>服务：$interval</span>
+    <div ng-controller="intervalService">
+        <p>{{myInterval}}</p>
+    </div>
+
+    <span>自定义服务：$hexafy 转换16进制</span>
+    <div ng-controller="hexafyService">
+        <input type="number" ng-model="myNumber">
+        <p>{{myNumber | myFormat}}</p>
+    </div>
+
+    ---------------------------------------------表单---------------------------------------------------------------
+    <span>表单：Input输入框</span>
+    <input type="text" ng-init="name='firstName'" ng-model="name">
+
+    <span>表单：Radio 单选框</span>
+    <div ng-controller="myRadioCtrl">
+        <span ng-repeat="x in sites">
+            <label ng-click="events.getMsgTypeData(x.id)">
+                <input  name="msgType" type="radio" ng-model="msgTypeDefault">{{x.url}}
+            </label>
+        </span>
+        <!--<input type="radio" ng-model="myVar" value="aaa">aaa
+        <input type="radio" ng-model="myVar" value="bbb">bbb
+        <input type="radio" ng-model="myVar" value="ccc">ccc-->
+    </div>
+
+    <span>表单：Checkbox 复选框</span>
+    <div ng-controller="myCheckboxCtrl">
+        <span ng-repeat="x in sites">
+            <label ng-click="events.getMsgTypeData(x.id)">
+                <span ng-if="$index == 0">
+                    <input  name="msgType" type="checkbox"  ng-model="msgTypeDefault">{{x.url}}
+                </span>
+                <span  ng-if="$index != 0">
+                    <input  name="msgType" type="checkbox">{{x.url}}
+                </span>
+            </label>
+        </span>
+    </div>
+
+    <span>Select下拉框：ng-options</span>
+    <div ng-controller="selectCtrl">
+        <select ng-init="selectedSite = sites[0].site" ng-model="selectedSite" ng-options="x.site for x in sites">
+        </select>
+        <p>选择的是：{{selectedSite.site}}</p> <!-- ng-option 选择的是一个对象，更适合下拉列表-->
+        <p>网址是：{{selectedSite.url}}</p>
+    </div>
+    <span>Select下拉框：ng-repeat</span>
+    <div ng-controller="select_re_Ctr">
+        <select ng-model="selectedSite">
+            <option ng-repeat="x in sites" value="{{x.url}}">{{x.site}}</option>
+        </select>
+        <p>选择的是：{{selectedSite}}</p> <!-- ng-repeat 选择的是一个字符串 -->
+    </div>
+
+    <span>Select下拉框：ng-options 数据源为对象时</span>
+    <div ng-controller="select_obj_Ctr">
+        <select  ng-model="selectedSite" ng-options="x for (x,y) in sites">
+        </select>
+        <p>选择的是：{{selectedSite}}</p>  <!-- 使用对象作为数据源, x 为键(key), y 为值(value): -->
+    </div>
+
+    <span>Select下拉框：ng-options 选择的值在key-value 中  value也是一个对象</span>
+    <div ng-controller="select_obj02_Ctr">
+        <select  ng-model="selectedCar" ng-options="y.brand  for (x,y) in cars">
+        </select>
+        <!-- 选择的值在 key-value 对的 value 中, 这是它是一个对象: -->
+        <!-- 在下拉菜单也可以不使用 key-value 对中的 key , 直接使用对象的属性 -->
+        <p>选择的是：{{selectedCar}}</p>
+    </div>
+
+    -------------------------------------------------------------------------------------------------------------------------
+
+    <span>表格Table：</span>
+    <div ng-controller="tableCtrl">
+        <table>
+            <tr ng-repeat="x in names">
+                <td>{{ $index + 1 }}</td>  <!-- 显示序号 -->
+                <td>{{ x.Name }}</td>
+                <td>{{ x.Country }}</td>
+               <!-- <td ng-if="$odd" style="background-color:#f1f1f1">{{ x.Name }}</td>
+                <td ng-if="$even">{{ x.Name }}</td>
+                <td ng-if="$odd" style="background-color:#f1f1f1">{{ x.Country }}</td>
+                <td ng-if="$even">{{ x.Country }}</td>-->
+            </tr>
+        </table>
+    </div>
+
+    -------------------------------------------------------------------------------------------------------------------------
+
+    <span>事件：ng-click</span>
+    <div>  <!-- 可以不指定 ng-controller clickCtrl -->
+        <button ng-click="count = count + 1">点我！</button>
+        <p>{{ count }}</p>
+    </div>
+
+    <span>显示隐藏HTML</span>
+    <div ng-controller="show_Ctrl">
+        <button ng-click="toggle()">隐藏/显示</button>
+        <div ng-hide="myVar">
+            名: <input type="text" ng-model="firstName"><br>
+            姓名: <input type="text" ng-model="lastName"><br>
+            <br>
+            Full Name: {{firstName + " " + lastName}}
+        </div>
+    </div>
+</div>
+
+<!--<script type="text/javascript" src="/js/angular.js"></script>-->
+<!--<script th:src="@{/js/angular.js}"></script>
+<script th:src="@{/js/jquery.min.js}"></script>-->
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    var app = angular.module('myApp',[]);
+    app.controller('personCtrl',function ($scope) {
+        $scope.lastName = "json";
+    });
+   app.controller('currency',function ($scope) {
+       $scope.quantity = 2;
+       $scope.price = 4;
+   });
+   app.controller('namesCtr',function ($scope) {
+       $scope.names = [{name:'Jani',country:'Norway'},{name:'Hege',country:'Sweden'},{name:'Kai',country:'Denmark'}];
+   });
+    app.controller('namesCtr1',function ($scope) {
+        $scope.names = [{name:'Jani',country:'Norway'},{name:'Hege',country:'Sweden'},{name:'Kai',country:'Denmark'}];
+    });
+    app.controller('reverseStr',function ($scope) {
+        $scope.str01= 'abc';
+    });
+    app.filter('reverse', function() { //可以注入依赖
+        return function(text) {
+            return text.split("").reverse().join("");
+        }
+    });
+    app.controller('dateCtr',function ($scope,$filter) {  // 怎么样初始化 date 数据？ 该方法是text 如果input type= date 该如何
+       // $scope.dateStr = new Date();
+        $scope.dateStr = $filter('date')(new Date(), 'yyyy-MM-dd');
+    });
+    app.controller('customersCtrl',function ($scope,$location) {
+        $scope.myUrl = $location.absUrl();
+    });
+    app.controller('timeoutService',function ($scope,$timeout) {
+        $scope.myHeader = "Hello Angular";
+        $timeout(function () {
+            $scope.myHeader = "How are you today?";
+        },2000);
+    });
+    app.controller('intervalService', function($scope, $interval) {
+        $scope.myInterval = new Date().toLocaleTimeString();
+        $interval(function () {
+            $scope.myInterval = new Date().toLocaleTimeString();
+        }, 1000);
+    });
+    app.service('hexafy', function() { //创建自定义服务：将一个数转换为16进制
+        this.myFunc = function (x) {
+            return x.toString(16);
+        }
+    });
+   /* app.controller('hexafyService', function($scope, hexafy) {
+        $scope.myNumber = hexafy.myFunc(255);
+    });*/
+    app.controller('hexafyService', function($scope) {
+        $scope.myNumber = 10;
+    });
+    app.filter('myFormat',['hexafy', function(hexafy) { //在过滤器中 使用自定义的服务
+        return function(x) {
+            return hexafy.myFunc(x);
+        };
+    }]);
+    app.controller('myRadioCtrl',function ($scope) {
+        $scope.sites  = [
+            {id : 01, url : "http://www.google.com"},
+            {id : 02, url : "http://www.runoob.com"},
+            {id : 03, url : "http://www.taobao.com"}];
+        $scope.msgTypeDefault=$scope.sites[0];
+    });
+    app.controller('myCheckboxCtrl',function ($scope) {
+        $scope.sites  = [
+            {id : 01, url : "http://www.google.com"},
+            {id : 02, url : "http://www.runoob.com"},
+            {id : 03, url : "http://www.taobao.com"}];
+        $scope.msgTypeDefault=true;
+    });
+    app.controller('selectCtrl',function ($scope) {
+        $scope.sites  = [
+            {site : "Google", url : "http://www.google.com"},
+            {site : "Runoob", url : "http://www.runoob.com"},
+            {site : "Taobao", url : "http://www.taobao.com"}];
+    });
+    app.controller('select_re_Ctr',function ($scope) {
+        $scope.sites  = [
+            {site : "Google", url : "http://www.google.com"},
+            {site : "Runoob", url : "http://www.runoob.com"},
+            {site : "Taobao", url : "http://www.taobao.com"}];
+    });
+    app.controller('select_obj_Ctr',function ($scope) {
+        $scope.sites = {
+            site01 : "Google",
+            site02 : "Runoob",
+            site03 : "Taobao"
+        };
+    });
+    app.controller('select_obj02_Ctr',function ($scope) {
+        $scope.cars = {
+            car01 : {brand : "Ford", model : "Mustang", color : "red"},
+            car02 : {brand : "Fiat", model : "500", color : "white"},
+            car03 : {brand : "Volvo", model : "XC90", color : "black"}
+        };
+    });
+    app.controller('tableCtrl',function ($scope,$http) {
+        $http.get("/angular/tableData")
+            .then(function (result) {  //正常处理请求
+                $scope.names = result.data.records;
+            })
+            .catch(function (result) { //错误处理请求
+                console.log("错误处理请求");
+            });
+    });
+    /*app.controller('clickCtrl',function ($scope) {
+
+    });*/
+    app.controller('show_Ctrl', function($scope) {
+        $scope.firstName = "John",
+            $scope.lastName = "Doe"
+        $scope.myVar = false;
+        $scope.toggle = function() {
+            $scope.myVar = !$scope.myVar;
+        };
+    });
+</script>
+</body>
+</html>
