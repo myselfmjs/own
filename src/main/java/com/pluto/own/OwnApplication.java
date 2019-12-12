@@ -8,12 +8,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;  //springboot 2.0
 // import org.springframework.boot.context.web.SpringBootServletInitializer; //springboot 1.0
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 //@Configuration
-//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 //@ComponentScan(basePackages="")
 //@EnableScheduling
 @SpringBootApplication

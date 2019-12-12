@@ -1,7 +1,9 @@
 package com.pluto.own.controller;
 
+import com.pluto.own.domain.pojo.ConnectionSettings;
 import com.pluto.own.domain.vo.Author;
 import com.pluto.own.domain.vo.Book;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +19,19 @@ import java.util.Map;
 @RequestMapping("/hello")
 public class HelloController {
 
+
+
     @RequestMapping
     public String hello(){
         return "Hello-hello";
     }
 
     @RequestMapping("/index")
+    @ResponseBody
     public String index(){
+
         int t= 7/0;
-        return "/WEB-INF/view/index.jsp";
+        return "index.jsp";
     }
 
     @RequestMapping("/index02")
@@ -35,9 +41,9 @@ public class HelloController {
 
     @RequestMapping("/tem")
     public String template(){
+        int t= 7/0;
         return "html/index";
     }
-
 
     /**
      * ControllerAdvice
@@ -75,5 +81,23 @@ public class HelloController {
         System.out.println(book);
         System.out.println(author);
         return book.toString() + author.toString();
+    }
+
+
+    /**
+     * 测试 用bean 替代 properties 属性
+     * @return
+     */
+
+    //通过获取bean 注入properties
+    @Autowired
+    private ConnectionSettings connection;
+
+    @RequestMapping("/connection")
+    public String getProperties(){
+
+        System.out.println(connection.getUsername());
+        System.out.println(connection.getRemoteAddress());
+        return connection.getUsername();
     }
 }

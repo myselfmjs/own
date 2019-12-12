@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Shiro 登录成功！</h1>
+    <button class="btn btn-success btn-block" id="btnRedirect">跳转</button>
+    <button class="btn btn-success btn-block" id="btnSubmit">登出</button>
+
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    $("#btnSubmit").click(function () {
+        location.href =  'logout';
+    });
+
+    $("#btnRedirect").click(function () {
+        location.href =  'one';
+    });
+</script>
+</body>
+</html>

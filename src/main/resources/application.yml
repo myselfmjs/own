@@ -29,3 +29,15 @@ spring:
     #  charset: UTF-8
     #  force: false
     #  enabled: true
+shiro:
+  user:
+    # 登录地址
+    loginUrl: /login/index
+    # 权限认证失败地址
+    unauthorizedUrl: /login/unauth
+    # 首页地址
+    indexUrl: /index
+
+connection:
+  username: admin
+  remoteAddress: 127.0.0.1

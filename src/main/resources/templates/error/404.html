@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--<html lang="en">-->
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
- 这是错误页面404  templates/error/4044444
+ <h1>错误信息：</h1>
+<!--通过 model是通过参数方法注入进来的， 页面必须是 text= "${}" 这种方式引用-->
+ <h4><span th:text="${msg}"></span></h4>
 </body>
+<div th:include="include::footer"></div>
 </html>

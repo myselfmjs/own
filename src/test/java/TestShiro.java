@@ -1,7 +1,7 @@
-import com.pluto.own.registration.shiro.MyRealm01;
-import com.pluto.own.registration.shiro.MyRealm02;
-import com.pluto.own.registration.shiro.MyRealmPermission01;
-import com.pluto.own.registration.shiro.MyRealmPermission02;
+import com.pluto.own.registration.shiro.realm.MyRealm01;
+import com.pluto.own.registration.shiro.realm.MyRealm02;
+import com.pluto.own.registration.shiro.realm.MyRealmPermission01;
+import com.pluto.own.registration.shiro.realm.MyRealmPermission02;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;

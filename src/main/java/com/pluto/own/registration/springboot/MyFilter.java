@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 //也可通过注解注册
 //@ServletComponentScan
-//@WebFilter(filterName = "myFilter",urlPatterns = "/*")
+@WebFilter(filterName = "myFilter",urlPatterns = "/*")
 public class MyFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

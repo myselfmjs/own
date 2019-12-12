@@ -1,4 +1,4 @@
-package com.pluto.own.registration.shiro;
+package com.pluto.own.registration.shiro.realm;
 
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.PermissionResolver;

@@ -1,11 +1,20 @@
 
-<head>
+<head th:fragment="headr">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <div th:fragment="footer">
     <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/angular.js}"></script>
-    <script th:src="@{/js/bootstap.min.js}"></script>
+    <!--<script th:src="@{/js/angular/angular.js}"></script>-->
+
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap/base.js}"></script>
+    <script th:src="@{/js/blockUI/jquery.blockUI.js}"></script>
+
+    <script th:src="@{/js/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/js/validate/messages_zh.min.js}"></script>
+
+    <script th:src="@{/js/layui/modules/layer.js}"></script>
+
 </div>
 </html>

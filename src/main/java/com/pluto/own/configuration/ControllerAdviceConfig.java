@@ -3,11 +3,14 @@ package com.pluto.own.configuration;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import com.google.common.collect.Maps;
+import org.springframework.web.servlet.ModelAndView;
+
 /**
  * @ ControllerAdviceConfig 这是一个增强的 Controller
  * 可以实现三个方面的功能
@@ -35,14 +38,12 @@ public class ControllerAdviceConfig {
     @ResponseBody
     public Object customException(Exception e){
         logger.error(ExceptionUtils.getFullStackTrace(e));
-        String msg = e.getMessage();
-        if (msg == null || msg.equals("")) {
-            msg = "服务器出错";
-        }
-        Map<String,String> map =  Maps.newHashMap();
-        map.put("message", msg);
-        return map;
-
+        ModelAndView model = new ModelAndView();
+        model.setViewName("error/404");
+        model.addObject("code",e.getMessage());
+        model.addObject("msg",e.toString()); //model是通过参数方法注入进来的  页面必须是 text= "${}" 这种方式引用
+        //return "/error/404";
+        return model;
     }
 
     /**
